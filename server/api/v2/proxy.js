@@ -9,9 +9,13 @@ try {
       createError({ statusCode: 400, statusMessage: "No 'original_req_url' provided in headers" })
       );
     }
-   
-
-    return proxyRequest(event, url, {fetch})
+    let query = ""
+    const params = getQuery(event)
+    if (Object.keys(params).length !== 0) {
+      query = new URLSearchParams(params).toString();
+    }
+       
+    return proxyRequest(event, url +'?'+ query, {fetch})
 
   } catch (err) {
    
