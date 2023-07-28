@@ -14,7 +14,7 @@ try {
     if (Object.keys(params).length !== 0) {
       query = new URLSearchParams(params).toString();
     }
-       
+   
     return proxyRequest(event, url +'?'+ query, {fetch})
 
   } catch (err) {
