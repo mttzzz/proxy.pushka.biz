@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
-  const apiKey = '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'
-  const openai = new OpenAI({apiKey });
+
+  const openai = new OpenAI();
    
     try {
       const {model, messages} = await readBody(event)
