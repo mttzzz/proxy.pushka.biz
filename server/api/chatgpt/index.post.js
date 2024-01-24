@@ -5,17 +5,26 @@ export default defineEventHandler(async (event) => {
   const openai = new OpenAI();
    
     try {
-      const {model, messages} = await readBody(event)
+      const {model, message, system} = await readBody(event)
 
       if (!model)  {
         return 'No model defined'
       }
 
-      if (!messages)  {
-        return 'No messages defined'
+      if (!system)  {
+        return 'No system defined'
       }
 
-      const completion = await openai.chat.completions.create({messages,model});
+      if (!message)  {
+        return 'No system defined'
+      }
+
+      const completion = await openai.chat.completions.create({model, messages : [
+        {
+          "role": "user",
+          "content": message
+        },
+      ]});
       return completion.choices[0].message.content
       } catch (err) {
        
