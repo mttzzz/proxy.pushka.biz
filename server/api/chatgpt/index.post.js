@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
-  const apiKey = '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'
+  const apiKey = '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'
   const openai = new OpenAI({apiKey });
    
     try {
