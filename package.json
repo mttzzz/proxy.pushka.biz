@@ -9,6 +9,9 @@
     "serve": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "nuxt": "^3.6.5"
+    "nuxt": "^3.9.3"
+  },
+  "dependencies": {
+    "openai": "^4.25.0"
   }
 }
