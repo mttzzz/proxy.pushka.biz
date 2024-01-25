@@ -59,9 +59,9 @@ export default defineEventHandler(async (event) => {
           result: 'success',
         }, body: {params: {local: {
           JSON: content,
-          'Цели':parsedContent?.data?.targets,
-          'Задачи':parsedContent?.data?.tasks,
-          'Обязательства':parsedContent?.data?.need,
+          'Цели':parsedContent?.data?.targets ?? 'не получилось распарсить JSON',
+          'Задачи':parsedContent?.data?.tasks ?? 'не получилось распарсить JSON',
+          'Обязательства':parsedContent?.data?.need ?? 'не получилось распарсить JSON',
         }}}
       }).then(res => {
         console.log(res)
