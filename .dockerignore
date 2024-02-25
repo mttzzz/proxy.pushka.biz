@@ -1,0 +1,8 @@
+node_modules
+.github
+.output
+.nuxt
+.git
+docs
+add.js
+.env
