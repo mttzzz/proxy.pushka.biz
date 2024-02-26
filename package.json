@@ -9,7 +9,15 @@
     "serve": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "nuxt": "^3.10.3"
+    "nuxt": "^3.10.3",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "openai": "^4.25.0"

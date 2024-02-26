@@ -1,87 +1,65 @@
-import OpenAI from "openai";
+import OpenAI from 'openai'
 
 export default defineEventHandler(async (event) => {
-  const openai = new OpenAI();
+  const openai = new OpenAI()
+  let operationOutcome = { success: true, message: 'ok' } // Object to track operation outcome
+  let sensei_hash, model, system, message // Объявление переменных здесь
 
   try {
-  // First, ensure you are getting a valid body object
-    const body = await readBody(event);
-      if (!body) {
-        return sendError(event, createError({ statusCode: 400, statusMessage: 'Request body is empty or invalid' }));
-       }
-
-    const { sensei_hash, model, system, message } = await readBody(event);
-    
-
-    if (!model) {
-      return sendError(event, createError({ statusCode: 500, statusMessage: 'No model defined' }));
+    const body = await readBody(event)
+    if (!body) {
+      throw new Error('Request body is empty or invalid')
     }
 
-    if (!system) {
-      return sendError(event, createError({ statusCode: 500, statusMessage: 'No system defined' }));
+    // Extracting fields from body
+    ;({ sensei_hash, model, system, message } = body) // Использование деструктуризации без дополнительного объявления
+
+    // Check for missing fields
+    const missingFields = ['model', 'system', 'message', 'sensei_hash'].filter(
+      (field) => !body[field],
+    )
+    if (missingFields.length) {
+      throw new Error(`Missing required field(s): ${missingFields.join(', ')}`)
     }
 
-    if (!message) {
-      return sendError(event, createError({ statusCode: 500, statusMessage: 'No message defined' })); // Corrected the error message here
-    }
-
-    // Using await for the completion creation
     const completion = await openai.chat.completions.create({
       model,
       messages: [
-        {
-          "role": "user",
-          "content": message
-        },
-      ]
-    });
+        { role: 'system', content: system },
+        { role: 'user', content: message },
+      ],
+    })
 
-    const content = completion.choices[0].message.content;
-    console.log(content);
+    const content = completion.choices[0].message.content
 
-    if (!sensei_hash) {
-      return sendError(event, createError({ statusCode: 500, statusMessage: 'No sensei_hash defined' }));
+    // Prepare response content for the success case to send to Sensei
+    operationOutcome.responseContent = {
+      params: { local: { answer: content } },
     }
-    
-    try {
-      const response = await $fetch('https://api.sensei.plus/webhook', {
-        method: 'post',
-        params: {
-          hash: sensei_hash,
-          result: 'success',
-        },
-        body: {
-          params: {
-            local: {
-              answer: content,
-            }
-          }
-        }
-      });
-
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-      // If the fetch fails, log the error and proceed; you might want to handle this differently.
-    }
-
-    return 'ok';
   } catch (err) {
-    
+    operationOutcome = {
+      success: false,
+      message: err.message,
+      status: err.status,
+    }
+  } finally {
     if (sensei_hash) {
       await $fetch('https://api.sensei.plus/webhook', {
         method: 'post',
         params: {
           hash: sensei_hash,
-          result: 'error',
+          result: operationOutcome.success ? 'success' : 'error',
         },
-        body: {
-          status: 500,
-          error: err.message
+        body: operationOutcome.responseContent,
+      }).catch((finalErr) => {
+        operationOutcome = {
+          success: false,
+          message: finalErr.message,
+          status: finalErr.status,
         }
-      });
+      })
     }
-
-    return sendError(event, createError({ statusCode: 500, statusMessage: err.message }));
   }
-});
+
+  return operationOutcome
+})

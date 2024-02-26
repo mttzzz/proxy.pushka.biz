@@ -1,0 +1,22 @@
+{
+    "plugins": ["prettier"],
+    "extends": ["@nuxtjs/eslint-config-typescript", "prettier"],
+    "rules": {
+      "prettier/prettier": 2,
+      "vue/multi-word-component-names": "off", // conflicts with nuxt nested components
+      "vue/no-multiple-template-root": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+      "no-console":"off",
+      "camelcase":"off"
+    },
+    "ignorePatterns": ["*.md"],
+    "overrides": [
+      {
+          "files": "*.json",
+          "rules": {
+            "no-unused-expressions": "off"
+          }
+      }
+  ]
+  }
