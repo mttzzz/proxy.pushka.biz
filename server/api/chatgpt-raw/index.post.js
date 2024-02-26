@@ -1,7 +1,7 @@
-import OpenAI from 'openai'
+import OpenAIClient from 'openai'
 
 export default defineEventHandler(async (event) => {
-  const openai = new OpenAI()
+  const openai = new OpenAIClient()
   let operationOutcome = { success: true, message: 'ok' } // Object to track operation outcome
   let sensei_hash, model, system, message // Объявление переменных здесь
 
