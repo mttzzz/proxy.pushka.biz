@@ -15,7 +15,9 @@ jobs:
         app.domain=pushka.biz
         app.subdomain=proxy
     secrets:
-        BUILD_ARGS: "TEST=1"
+        BUILD_ARGS: ""
+        PARAMS: |
+          OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}}
         HELM_REPO: ${{ secrets.HELM_REPO }}
         REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
         REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
