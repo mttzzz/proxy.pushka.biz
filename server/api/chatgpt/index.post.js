@@ -34,13 +34,15 @@ export default defineEventHandler(async (event) => {
     let parsedContent = null
     try {
       parsedContent = JSON.parse(content)
-    } catch (error) {}
+    } catch (error) {
+      operationOutcome.params = { local: { JSON: content } }
+    }
 
     if (!parsedContent) {
       throw new Error('Не валидный JSON')
     }
 
-    operationOutcome.params = { local: parsedContent }
+    operationOutcome.params = { local: parsedContent, JSON: content }
   } catch (err) {
     operationOutcome = {
       success: false,
