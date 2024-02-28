@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       throw new Error('Не валидный JSON')
     }
 
-    operationOutcome.params = { local: parsedContent, JSON: content }
+    operationOutcome.params = { local: { ...parsedContent, JSON: content } }
   } catch (err) {
     operationOutcome = {
       success: false,
