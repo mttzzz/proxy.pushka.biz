@@ -15,10 +15,11 @@ jobs:
         app.domain=pushka.biz
         app.subdomain=proxy
         app.useConfigMap=true
+        app.livenessProbe.initialDelaySeconds=10
+        app.readinessProbe.initialDelaySeconds=10
+        app.probeScheme=HTTP
+        app.probePath=/api/health
     secrets:
-      BUILD_ARGS: ''
-      PARAMS: |
-        "TEST=1"
       HELM_REPO: ${{ secrets.HELM_REPO }}
       REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
