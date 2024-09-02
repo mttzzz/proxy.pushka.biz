@@ -6,20 +6,21 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "serve": "node .output/server/index.mjs"
-  },
-  "devDependencies": {
-    "nuxt": "^3.10.3",
-    "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@nuxtjs/eslint-module": "^4.1.0",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "serve": "node .output/server/index.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "openai": "^4.25.0"
+    "@anthropic-ai/sdk": "^0.27.1",
+    "openai": "^4.25.0",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.0.0",
+    "@nuxt/eslint": "^0.5.5",
+    "eslint": "^9.9.1",
+    "nuxt": "^3.13.0",
+    "prisma": "^5.19.0",
+    "typescript": "^5.5.4"
   }
 }

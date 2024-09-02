@@ -8,13 +8,14 @@ export default defineEventHandler((event) => {
         event,
         createError({
           statusCode: 400,
-          statusMessage: "No 'original_req_url' provided in headers",
+          statusMessage: 'No \'original_req_url\' provided in headers',
         }),
       )
     }
 
     return proxyRequest(event, baseUrl + href, { fetch })
-  } catch (err) {
+  }
+  catch (err) {
     return sendError(
       event,
       createError({ statusCode: 500, statusMessage: err.message }),

@@ -1,7 +1,5 @@
-import OpenAIClient from 'openai'
-
 export default defineEventHandler(async (event) => {
-  const openai = new OpenAIClient()
+  const openai = event.context.openai
   let operationOutcome = { success: true, message: 'ok' } // Object to track operation outcome
   let sensei_hash, model, system, message // Объявление переменных здесь
 
@@ -16,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
     // Check for missing fields
     const missingFields = ['model', 'system', 'message', 'sensei_hash'].filter(
-      (field) => !body[field],
+      field => !body[field],
     )
     if (missingFields.length) {
       throw new Error(`Missing required field(s): ${missingFields.join(', ')}`)
@@ -36,13 +34,15 @@ export default defineEventHandler(async (event) => {
     operationOutcome.responseContent = {
       params: { local: { answer: content } },
     }
-  } catch (err) {
+  }
+  catch (err) {
     operationOutcome = {
       success: false,
       message: err.message,
       status: err.status,
     }
-  } finally {
+  }
+  finally {
     if (sensei_hash) {
       await $fetch('https://api.sensei.plus/webhook', {
         method: 'post',

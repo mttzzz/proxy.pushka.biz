@@ -9,19 +9,19 @@ jobs:
   main:
     uses: mttzzz/github-deploy-template-workflow/.github/workflows/web-app.yml@master
     with:
-      app_name: 'proxy-pushka-biz'
+      app_name: proxy-pushka-biz
       params: |
         app.port=3000
         app.domain=pushka.biz
         app.subdomain=proxy
     secrets:
-        BUILD_ARGS: ""
-        PARAMS: |
-          env.OPENAI_API_KEY=${{secrets.OPENAI_API_KEY}}
-        HELM_REPO: ${{ secrets.HELM_REPO }}
-        REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
-        REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-        REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-        DO_TOKEN: ${{ secrets.DO_TOKEN }}
-        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      BUILD_ARGS: ''
+      PARAMS: |
+        "TEST=1"
+      HELM_REPO: ${{ secrets.HELM_REPO }}
+      REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      DO_TOKEN: ${{ secrets.DO_TOKEN }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

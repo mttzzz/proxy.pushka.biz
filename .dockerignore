@@ -6,3 +6,4 @@ node_modules
 docs
 add.js
 .env
+configmap.yaml

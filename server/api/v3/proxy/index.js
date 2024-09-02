@@ -7,7 +7,7 @@ export default defineEventHandler((event) => {
         event,
         createError({
           statusCode: 400,
-          statusMessage: "No 'original_req_url' provided in headers",
+          statusMessage: 'No \'original_req_url\' provided in headers',
         }),
       )
     }
@@ -17,8 +17,9 @@ export default defineEventHandler((event) => {
       query = new URLSearchParams(params).toString()
     }
 
-    return proxyRequest(event, url + '?' + query, { fetch })
-  } catch (err) {
+    return proxyRequest(event, `${url}?${query}`, { fetch })
+  }
+  catch (err) {
     return sendError(
       event,
       createError({ statusCode: 500, statusMessage: err.message }),

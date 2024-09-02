@@ -1,39 +1,28 @@
 export default defineEventHandler(async (event) => {
-  const openai = event.context.openai
+  const anthropic = event.context.anthropic
+
   let operationOutcome = { success: true, message: 'ok' }
-  let sensei_hash, model, system, message
+  const { sensei_hash, model, system, message } = await readBody(event)
 
   try {
-    const body = await readBody(event)
-    if (!body) {
-      throw new Error('Request body is empty or invalid')
-    }
-
-    // Extracting fields from body
-    ;({ sensei_hash, model, system, message } = body)
-
-    // Check for missing fields
-    const missingFields = ['model', 'system', 'message', 'sensei_hash'].filter(
-      field => !body[field],
-    )
-    if (missingFields.length) {
-      throw new Error(`Missing required field(s): ${missingFields.join(', ')}`)
-    }
-
-    const completion = await openai.chat.completions.create({
+    const completion = await anthropic.messages.create({
       model,
+      max_tokens: 4096,
+      system,
       messages: [
-        { role: 'system', content: system },
         { role: 'user', content: message },
       ],
     })
 
-    const content = completion.choices[0].message.content
+    const content = completion.content[0].text
+
     let parsedContent = null
     try {
       parsedContent = JSON.parse(content)
     }
     catch (error) {
+      console.error(error)
+
       operationOutcome.params = { local: { JSON: content } }
     }
 
