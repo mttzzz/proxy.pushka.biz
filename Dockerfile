@@ -27,8 +27,7 @@ COPY . /app
 
 # Сборка приложения
 RUN pnpm build
-RUN pnpx prisma generate
-#RUN pnpx prisma migrate deploy
+
 
 # Этап продакшена
 FROM node:20-alpine as prod
