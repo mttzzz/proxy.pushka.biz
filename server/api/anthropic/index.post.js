@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   try {
     const completion = await anthropic.messages.create({
       model,
-      max_tokens: 4096,
+      max_tokens: 8192,
       system,
       messages: [
         { role: 'user', content: message },
