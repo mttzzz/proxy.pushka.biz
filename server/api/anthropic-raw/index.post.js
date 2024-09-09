@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const config = useRuntimeConfig()
-    anthropic.apiKey = key === 2 ? config.anthropicApiKey2 : config.anthropicApiKey
+    anthropic.apiKey = Number.parseInt(key) === 2 ? config.anthropicApiKey2 : config.anthropicApiKey
     const completion = await anthropic.beta.promptCaching.messages.create({
       model,
       max_tokens: 8192,
