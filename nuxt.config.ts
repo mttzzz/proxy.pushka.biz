@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     openaiApiKey: process.env.NUXT_OPENAI_API_KEY,
     anthropicApiKey: process.env.NUXT_ANTHROPIC_API_KEY,
+    anthropicApiKey2: process.env.NUXT_ANTHROPIC_API_KEY_2,
   },
 
   compatibilityDate: '2024-09-02',

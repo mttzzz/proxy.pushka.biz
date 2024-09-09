@@ -1,9 +1,11 @@
 export default defineEventHandler(async (event) => {
   const anthropic = event.context.anthropic
   let operationOutcome = { success: true, message: 'ok' }
-  const { sensei_hash, model, system, message, temperature, top_p } = await readBody(event)
+  const { sensei_hash, model, system, message, temperature, top_p, key } = await readBody(event)
 
   try {
+    const config = useRuntimeConfig()
+    anthropic.apiKey = key === 2 ? config.anthropicApiKey2 : config.anthropicApiKey
     const completion = await anthropic.beta.promptCaching.messages.create({
       model,
       max_tokens: 8192,
