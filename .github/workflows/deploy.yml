@@ -19,7 +19,8 @@ jobs:
         app.readinessProbe.initialDelaySeconds=10
         app.probeScheme=HTTP
         app.probePath=/api/health
-        TEST=1
+        ingress.enabled=true
+        httpRoute.enabled=true
     secrets:
       HELM_REPO: ${{ secrets.HELM_REPO }}
       REGISTRY_NAME: ${{ secrets.REGISTRY_NAME }}
@@ -28,3 +29,4 @@ jobs:
       DO_TOKEN: ${{ secrets.DO_TOKEN }}
       TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
