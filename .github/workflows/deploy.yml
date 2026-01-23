@@ -19,7 +19,7 @@ jobs:
         app.readinessProbe.initialDelaySeconds=10
         app.probeScheme=HTTP
         app.probePath=/api/health
-        ingress.enabled=true
+        ingress.enabled=false
         httpRoute.enabled=true
     secrets:
       HELM_REPO: ${{ secrets.HELM_REPO }}
